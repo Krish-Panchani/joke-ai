@@ -24,9 +24,8 @@ export async function continueConversation(
     input: string,
 ): Promise<ClientMessage> {
     "use server";
-
+    
     const history = getMutableAIState();
-
     const result = await streamUI({
         model: google('models/gemini-pro'),
         messages: [...history.get(), { role: "user", content: input }],
@@ -45,17 +44,19 @@ export async function continueConversation(
             tellAJoke: {
                 description: "Tell me a joke.",
                 parameters: z.object({
-                    location: z.string().describe("user's location"),
+                    location: z.string().describe("user's location, if user not define location, default is London"),
                     generationConfig: z.object({
                         response_mime_type: z.string(),
                     }),
                 }),
-                generate: async function* ({ location }) {
+                
+                generate: async function* ({ location  }) {
                     const joke = await generateObject({
-                        model: google('models/gemini-pro'),
+                        model: google('models/gemini-1.5-pro-latest'),
                         schema: jokeSchema,
                         prompt:
-                            "Generate a joke that incorporates the following location: Gujarat"
+                            "Generate a joke that incorporates the following location:" +
+                            location,
                     });
 
                     return <JokeComponent joke={joke.object} />;

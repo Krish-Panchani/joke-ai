@@ -44,19 +44,19 @@ export async function continueConversation(
             tellAJoke: {
                 description: "Tell me a joke.",
                 parameters: z.object({
-                    location: z.string().describe("user's location, if user not define location, default is London"),
+                    entity: z.string().describe("user's defined Person. If user not specify then default value person = friend."),
                     generationConfig: z.object({
                         response_mime_type: z.string(),
                     }),
                 }),
                 
-                generate: async function* ({ location  }) {
+                generate: async function* ({ entity  }) {
                     const joke = await generateObject({
                         model: google('models/gemini-1.5-pro-latest'),
                         schema: jokeSchema,
                         prompt:
-                            "Generate a joke that incorporates the following location:" +
-                            location,
+                            "Generate a very funny dark joke that incorporates the Person:" +
+                            entity,
                     });
 
                     return <JokeComponent joke={joke.object} />;

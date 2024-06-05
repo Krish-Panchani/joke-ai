@@ -4,6 +4,7 @@ import "./globals.css";
 import '@radix-ui/themes/styles.css';
 
 import { Theme } from '@radix-ui/themes';
+import { AI } from "./actions";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <AI>
     <html lang="en">
       <body className={inter.className}>
       <Theme appearance="dark">
@@ -24,5 +26,6 @@ export default function RootLayout({
       </Theme>
       </body>
     </html>
+    </AI>
   );
 }

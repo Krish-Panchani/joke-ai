@@ -12,7 +12,8 @@ export default function Home() {
 
   return (
     <div>
-      <div>
+      <h1 className="px-4 py-4 text-4xl font-bold">Testing</h1>
+      <div className="px-4 py-4">
         {conversation.map((message: ClientMessage) => (
           <div key={message.id}>
             {message.role}: {message.display}
@@ -21,6 +22,7 @@ export default function Home() {
       </div>
 
       <form
+      className="flex px-4"
         onSubmit={async (e) => {
           e.preventDefault();
           setInput("");
@@ -39,12 +41,13 @@ export default function Home() {
       >
         <input
           type="text"
+          className="w-1/2 border-2 border-gray-800 rounded-lg px-2 py-2"
           value={input}
           onChange={(event) => {
             setInput(event.target.value);
           }}
         />
-        <button>Send Message</button>
+        <button className="px-4">Send Message</button>
       </form>
     </div>
   );
